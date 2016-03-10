@@ -39,6 +39,8 @@
 
   /* HTTP page routing */
   app.use("/", index);
+  app.use("/api/reservations", index);
+  app.use("/api/save", index);
 
   /* Catch 404 error and forward to error handler */
   app.use(function(request, response, next) {

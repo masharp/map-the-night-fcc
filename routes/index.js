@@ -12,4 +12,17 @@ router.get("/", function(request, response) {
   response.render("home", { title: "Map the Night | Social Nightlife Tracker" });
 });
 
+//return reservation JSON
+router.get("/api/reservations", function(request, response) {
+  db.returnReservations().then(function(r) {
+    console.log(r);
+  });
+});
+
+//handle a new reservation
+router.post("/api/save", function(request, response) {
+  console.log(request.body);
+  //console.log(db.saveReservation(area, location, user));
+});
+
 module.exports = router;

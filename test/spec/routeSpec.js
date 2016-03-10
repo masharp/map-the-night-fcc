@@ -17,7 +17,7 @@ describe("HTTP Route GET Testing", function() {
 
     it("returns proper view", function(done) {
       request.get(baseURL, function(error, response, body) {
-        expect(body).toContain("<title>Map the Night</title>");
+        expect(body).toContain("<title>Map the Night | Social Nightlife Tracker</title>");
         done();
       });
     });

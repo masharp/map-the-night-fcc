@@ -15,6 +15,9 @@ body, html {
   width: 100%;
   text-align: center;
 
+  #error-label {
+    color: red;
+  }
   #main-title {
     font-size: 3em;
     font-family: $title-font;
@@ -22,4 +25,7 @@ body, html {
   #main-subtitle {
     font-size: 1.2em;
   }
+}
+.hidden {
+  display: none;
 }

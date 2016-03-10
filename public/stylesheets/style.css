@@ -7,10 +7,15 @@ body, html {
 #main {
   width: 100%;
   text-align: center; }
+  #main #error-label {
+    color: red; }
   #main #main-title {
     font-size: 3em;
     font-family: "Pacifico", cursive; }
   #main #main-subtitle {
     font-size: 1.2em; }
+
+.hidden {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */
