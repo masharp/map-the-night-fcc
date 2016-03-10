@@ -1,0 +1,1 @@
+/* Jasmine Spec tests for app javascript */

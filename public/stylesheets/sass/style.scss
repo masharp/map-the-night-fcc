@@ -1,9 +1,25 @@
 $primary-color: white;
-$secondary-color: #006591;
-$tertiary-color: #F2F2F2;
-
-$item-background: gray;
-$item-color: black;
+$secondary-color: #1BB248;
+$tertiary-color: gray;
 
 $font: "Montserrat", sans-serif;
 $title-font: "Pacifico", cursive;
+
+body, html {
+  font-family: $font;
+  background-color: $secondary-color;
+  color: $primary-color;
+  font-size: 15px;
+}
+#main {
+  width: 100%;
+  text-align: center;
+
+  #main-title {
+    font-size: 3em;
+    font-family: $title-font;
+  }
+  #main-subtitle {
+    font-size: 1.2em;
+  }
+}

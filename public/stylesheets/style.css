@@ -1,0 +1,16 @@
+body, html {
+  font-family: "Montserrat", sans-serif;
+  background-color: #1BB248;
+  color: white;
+  font-size: 15px; }
+
+#main {
+  width: 100%;
+  text-align: center; }
+  #main #main-title {
+    font-size: 3em;
+    font-family: "Pacifico", cursive; }
+  #main #main-subtitle {
+    font-size: 1.2em; }
+
+/*# sourceMappingURL=style.css.map */
