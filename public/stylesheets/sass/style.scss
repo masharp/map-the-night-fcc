@@ -17,6 +17,7 @@ body, html {
 
   #error-label {
     color: red;
+    background-color: $secondary-color;
   }
   #main-title {
     font-size: 3em;
@@ -24,6 +25,31 @@ body, html {
   }
   #main-subtitle {
     font-size: 1.2em;
+  }
+  #area-input {
+    margin: .7em;
+    padding: .5em;
+    width: 25%;
+    font-size: 1.2em;
+    border: none;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+  }
+  #area-btn {
+    font-size: 1.3em;
+    padding: .3em;
+    border: none;
+
+    &:hover {
+      background-color: darken($secondary-color, 15);
+      color: $primary-color;
+      cursor: pointer;
+    }
+  }
+
+  #locations {
+    width: 100%;
   }
 }
 .hidden {

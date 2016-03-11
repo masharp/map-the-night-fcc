@@ -8,12 +8,32 @@ body, html {
   width: 100%;
   text-align: center; }
   #main #error-label {
-    color: red; }
+    color: red;
+    background-color: #1BB248; }
   #main #main-title {
     font-size: 3em;
     font-family: "Pacifico", cursive; }
   #main #main-subtitle {
     font-size: 1.2em; }
+  #main #area-input {
+    margin: .7em;
+    padding: .5em;
+    width: 25%;
+    font-size: 1.2em;
+    border: none;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none; }
+  #main #area-btn {
+    font-size: 1.3em;
+    padding: .3em;
+    border: none; }
+    #main #area-btn:hover {
+      background-color: #11702d;
+      color: white;
+      cursor: pointer; }
+  #main #locations {
+    width: 100%; }
 
 .hidden {
   display: none; }

@@ -12,6 +12,11 @@ router.get("/", function(request, response) {
   response.render("home", { title: "Map the Night | Social Nightlife Tracker" });
 });
 
+//return yelp API data
+router.get("/api/location/:area", function(request, response) {
+    console.log(request.params.area);
+});
+
 //return reservation JSON
 router.get("/api/reservations", function(request, response) {
   db.returnReservations().then(function(r) {

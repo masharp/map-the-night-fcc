@@ -25,11 +25,17 @@
       var inputElement = document.getElementById("area-input");
       var inputVal = inputElement.value;
 
-      if(inputVal.length < 1) {
+      if(!inputVal) {
         errorElement.classList.remove("hidden");
-        errorElement.value = "Please enter a location! (City, ST)";
+        errorElement.innerHTML = "Please enter a location! (City, ST)";
       } else {
-        //request("/api/reservations", area, );
+        var url = "http://localhost:3000/api/location/" + inputVal;
+
+        Request(url, function(error, response) {
+          if(error) console.error("ERROR RETRIEVING LOCATION DATA", error);
+
+          //this.setState({ locationData: response });
+        });
       }
     },
     handleKeyDown: function handleKeyDown(e) {
@@ -40,18 +46,52 @@
         this.submit();
       }
     },
+    reserve: function reserve(location) {
+
+    },
+    tweet: function tweet(location) {
+
+    },
     render: function render() {
       return(
         React.createElement("div", { id: "main" },
           React.createElement("h1", { id: "main-title" }, "Map the Night"),
-          React.createElement("span", { id: "main-subtitle" }, "See nightlife activity in your area and RSVP early in the day!"),
+          React.createElement("span", { id: "main-subtitle" }, "See nightlife in your area and let your friends know where you'll be!"),
           React.createElement("br", {}),
           React.createElement("label", { id: "error-label", className: "hidden" }),
           React.createElement("br", {}),
           React.createElement("input", { id: "area-input", type: "text", placeholder: "Your location...",
             onKeyDown: this.handleKeyDown }),
-          React.createElement("input", { id: "area-btn", type:"button", onClick: this.submit, value: "Find" })
+          React.createElement("input", { id: "area-btn", type:"button", onClick: this.submit, value: "Find" }),
+          React.createElement("br", {}),
+          React.createElement(Locations, { data: {} /*this.state.locationData*/, reserve: this.reserve, tweet: this.tweet })
         )
+      );
+    }
+  });
+
+  var Locations = React.createClass({ displayName: "Locations",
+    propTypes: {
+      data: React.PropTypes.object.isRequired,
+      reserve: React.PropTypes.func.isRequired,
+      tweet: React.PropTypes.func.isRequired
+    },
+    render: function render() {
+      return(
+        React.createElement("div", { id: "locations" },
+          React.createElement(Spot, { spotInfo: {} })
+        )
+      );
+    }
+  });
+
+  var Spot = React.createClass({ displayName: "Spot",
+    propTypes: {
+      spotInfo: React.PropTypes.object.isRequired
+    },
+    render: function render() {
+      return(
+        React.createElement("div", { className: "spot" })
       );
     }
   });
