@@ -6,10 +6,9 @@
   var Request = require("request");
 
   /* global script variables */
-  var yelpURL = "https://api.yelp.com/v2/search?term=food&location=";
   var appURL = "http://localhost:3000/api/location/";
 
-  /* Redux Reducer */
+  /* Redux Reducer
   var appReducer = function(state, action) {
     if(state === undefined) state = {
       locationData: {}
@@ -25,32 +24,33 @@
     return state;
   };
 
-  /* Redux Dispatchers */
+  /* Redux Dispatchers
   var appDispatches = {
     newLocationData: function newLocationData(data) {
       appStore.dispatch({ type: "NEW_LOCATIOn", locationData: data });
     }
   };
 
-  /* Redux Store */
+  /* Redux Store
   var appStore = Redux.createStore(appReducer);
+  */
 
   /* React Components */
   var Controller = React.createClass({ displayName: "Controller",
     propTypes: {
-      urls: React.PropTypes.object.isRequired,
-      getState: React.PropTypes.func.isRequired,
-      dispatches: React.PropTypes.object.isRequired
+      url: React.PropTypes.string.isRequired
+      //getState: React.PropTypes.func.isRequired,
+      //dispatches: React.PropTypes.object.isRequired
     },
     getInitialState: function getInitialState() {
-      return { locationData: this.props.getState().locationData };
+      return { locationData: {} };
     },
     componentDidMount: function componentDidMount() {
-      var self = this;
+      /* var self = this;
       appStore.subscribe(function() {
         var newState = self.props.getState();
         self.setState(newState);
-      });
+      }); */
     },
     submit: function submit() {
       var errorElement = document.getElementById("error-label");
@@ -63,19 +63,11 @@
         errorElement.innerHTML = "Please enter a location! (City, ST)";
       } else {
         var searchVal = this.parseInputVal(inputVal);
-        var localAPICall =  this.props.urls.appURL + inputVal;
-        var yelpAPICall = this.props.urls.yelpURL + searchVal;
-        console.log(yelpAPICall);
+        var localAPICall =  this.props.url + searchVal;
 
         Request(localAPICall, function(error, localResponse) {
           if(error) console.error("ERROR RETRIEVING LOCATION DATA");
-
-          Request(yelpAPICall, function(error, yelpResponse) {
-            if(error) console.error("ERROR RETRIEVING LOCATION DATA");
-
-            var parsedData = parseLocationData(localResponse, yelpResponse);
-            //dispatch state
-          });
+          self.setState({ locationData: localResponse });
         });
       }
     },
@@ -90,9 +82,6 @@
         }
         return temp;
       }
-    },
-    parseLocationData: function parseLocationData(userData, locationData) {
-
     },
     handleKeyDown: function handleKeyDown(e) {
       var errorElement = document.getElementById("error-label");
@@ -109,6 +98,7 @@
 
     },
     render: function render() {
+      console.log(this.state.locationData);
       return(
         React.createElement("div", { id: "main" },
           React.createElement("h1", { id: "main-title" }, "Map the Night"),
@@ -163,6 +153,6 @@
   });
 
   ReactDOM.render(React.createElement(Controller,
-    { urls: { yelpURL: yelpURL, appURL: appURL }, getState: appStore.getState, dispatches: appDispatches }),
+    { url: appURL } /* getState: appStore.getState, dispatches: appDispatches */),
     document.getElementById("loader"));
 })();

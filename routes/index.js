@@ -7,6 +7,15 @@ var router = express.Router();
 var db = require("../db");
 var dotenv = require("dotenv").config();
 var app = require("../app");
+var Yelp = require("yelp");
+
+/* Setup Yelp Authentication */
+var yelp = new Yelp({
+  consumer_key: process.env.YELP_CONS_KEY,
+  consumer_secret: process.env.YELP_CONS_SECRET,
+  token: process.env.YELP_TOK,
+  token_secret: process.env.YELP_TOK_SECRET,
+});
 
 router.get("/", function(request, response) {
   response.render("home", { title: "Map the Night | Social Nightlife Tracker" });
@@ -14,7 +23,7 @@ router.get("/", function(request, response) {
 
 //return yelp API data
 router.get("/api/location/:area", function(request, response) {
-    console.log(request.params.area);
+  console.log(request.params.area);
 });
 
 //return reservation JSON
