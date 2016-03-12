@@ -1,3 +1,19 @@
+/* CSS Fade-In keyframes -  Reference: https://fabriceleven.com/ */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
 body, html {
   font-family: "Montserrat", sans-serif;
   background-color: #1BB248;
@@ -27,13 +43,60 @@ body, html {
   #main #area-btn {
     font-size: 1.3em;
     padding: .3em;
-    border: none; }
+    border: none;
+    background-color: #11702d;
+    color: white; }
     #main #area-btn:hover {
-      background-color: #11702d;
-      color: white;
+      background-color: #189c3f;
       cursor: pointer; }
   #main #locations {
-    width: 100%; }
+    width: 100%;
+    margin-top: .5em; }
+    #main #locations .spot {
+      display: inline-block;
+      padding: .5em;
+      margin: .05em;
+      width: 15em;
+      border: .1em solid white;
+      opacity: 0;
+      /* CSS Fade-In Animation -  Reference: https://fabriceleven.com/ */
+      -webkit-animation: fadeIn ease-in 1;
+      -moz-animation: fadeIn ease-in 1;
+      animation: fadeIn ease-in 1;
+      -webkit-animation-fill-mode: forwards;
+      -moz-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+      -webkit-animation-duration: 1.5s;
+      -moz-animation-duration: 1.5s;
+      animation-duration: 1.5s; }
+      #main #locations .spot:hover {
+        background-color: #39e16b; }
+      #main #locations .spot h2 {
+        font-family: "Pacifico", cursive; }
+      #main #locations .spot img {
+        height: auto;
+        width: 60%; }
+      #main #locations .spot input {
+        margin: .6em;
+        padding: .3em;
+        border: none;
+        background-color: #11702d;
+        color: white; }
+        #main #locations .spot input:hover {
+          background-color: #189c3f;
+          cursor: pointer; }
+      #main #locations .spot label {
+        padding: .2em;
+        color: #11702d; }
+
+.footer {
+  text-align: center; }
+
+a {
+  text-decoration: none;
+  color: #4d4d4d; }
+  a:hover {
+    text-decoration: underline; }
 
 .hidden {
   display: none; }

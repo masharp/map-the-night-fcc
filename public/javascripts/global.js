@@ -6,37 +6,93 @@
   var Request = require("request");
 
   /* global script variables */
-  var yelpURL = "";
-  var appURL = "";
+  var yelpURL = "https://api.yelp.com/v2/search?term=food&location=";
+  var appURL = "http://localhost:3000/api/location/";
 
+  /* Redux Reducer */
+  var appReducer = function(state, action) {
+    if(state === undefined) state = {
+      locationData: {}
+    };
+
+    switch(action.type) {
+      case "NEW_LOCATION":
+        state.locationData = action.locationData;
+        return state;
+      default:
+        return state;
+    }
+    return state;
+  };
+
+  /* Redux Dispatchers */
+  var appDispatches = {
+    newLocationData: function newLocationData(data) {
+      appStore.dispatch({ type: "NEW_LOCATIOn", locationData: data });
+    }
+  };
+
+  /* Redux Store */
+  var appStore = Redux.createStore(appReducer);
+
+  /* React Components */
   var Controller = React.createClass({ displayName: "Controller",
     propTypes: {
-      yelpURL: React.PropTypes.string.isRequired,
-      appURL: React.PropTypes.string.isRequired
+      urls: React.PropTypes.object.isRequired,
+      getState: React.PropTypes.func.isRequired,
+      dispatches: React.PropTypes.object.isRequired
     },
     getInitialState: function getInitialState() {
-      return { locationData: null, userData: null };
+      return { locationData: this.props.getState().locationData };
     },
     componentDidMount: function componentDidMount() {
-
+      var self = this;
+      appStore.subscribe(function() {
+        var newState = self.props.getState();
+        self.setState(newState);
+      });
     },
     submit: function submit() {
       var errorElement = document.getElementById("error-label");
       var inputElement = document.getElementById("area-input");
       var inputVal = inputElement.value;
+      var self = this;
 
       if(!inputVal) {
         errorElement.classList.remove("hidden");
         errorElement.innerHTML = "Please enter a location! (City, ST)";
       } else {
-        var url = "http://localhost:3000/api/location/" + inputVal;
+        var searchVal = this.parseInputVal(inputVal);
+        var localAPICall =  this.props.urls.appURL + inputVal;
+        var yelpAPICall = this.props.urls.yelpURL + searchVal;
+        console.log(yelpAPICall);
 
-        Request(url, function(error, response) {
-          if(error) console.error("ERROR RETRIEVING LOCATION DATA", error);
+        Request(localAPICall, function(error, localResponse) {
+          if(error) console.error("ERROR RETRIEVING LOCATION DATA");
 
-          //this.setState({ locationData: response });
+          Request(yelpAPICall, function(error, yelpResponse) {
+            if(error) console.error("ERROR RETRIEVING LOCATION DATA");
+
+            var parsedData = parseLocationData(localResponse, yelpResponse);
+            //dispatch state
+          });
         });
       }
+    },
+    parseInputVal: function parseInputVal(input) {
+      var t = input.split(" ");
+      if(t.length === 1) { return t[0]; }
+      else {
+        var temp = t[0];
+
+        for(var i = 1; i < t.length; i++) {
+          temp += "+" + t[i];
+        }
+        return temp;
+      }
+    },
+    parseLocationData: function parseLocationData(userData, locationData) {
+
     },
     handleKeyDown: function handleKeyDown(e) {
       var errorElement = document.getElementById("error-label");
@@ -64,7 +120,7 @@
             onKeyDown: this.handleKeyDown }),
           React.createElement("input", { id: "area-btn", type:"button", onClick: this.submit, value: "Find" }),
           React.createElement("br", {}),
-          React.createElement(Locations, { data: {} /*this.state.locationData*/, reserve: this.reserve, tweet: this.tweet })
+          React.createElement(Locations, { locations: this.state.locationData, reserve: this.reserve, tweet: this.tweet })
         )
       );
     }
@@ -72,15 +128,13 @@
 
   var Locations = React.createClass({ displayName: "Locations",
     propTypes: {
-      data: React.PropTypes.object.isRequired,
+      locations: React.PropTypes.object.isRequired,
       reserve: React.PropTypes.func.isRequired,
       tweet: React.PropTypes.func.isRequired
     },
     render: function render() {
       return(
-        React.createElement("div", { id: "locations" },
-          React.createElement(Spot, { spotInfo: {} })
-        )
+        React.createElement("div", { id: "locations" })
       );
     }
   });
@@ -91,10 +145,24 @@
     },
     render: function render() {
       return(
-        React.createElement("div", { className: "spot" })
+        React.createElement("div", { className: "spot" },
+          React.createElement("a", { href: "http://esq.h-cdn.co/assets/cm/15/06/54d3cdbba4f40_-_esq-01-bar-lgn.jpg", target: "_blank" },
+            React.createElement("img", { src: "http://esq.h-cdn.co/assets/cm/15/06/54d3cdbba4f40_-_esq-01-bar-lgn.jpg" }),
+            React.createElement("h2", {}, "Johny's Pub")
+          ),
+          React.createElement("span", {}, "2584 Mt. Gurgles Rd."),
+          React.createElement("br", {}),
+          React.createElement("span", {}, "Youngstown, GH"),
+          React.createElement("br", {}),
+          React.createElement("input", { type:"button", value: "Check In" }),
+          React.createElement("br", {}),
+          React.createElement("label", {}, "0 Going Tonight")
+        )
       );
     }
   });
 
-  ReactDOM.render(React.createElement(Controller, { yelpURL: yelpURL, appURL: appURL }), document.getElementById("loader"));
+  ReactDOM.render(React.createElement(Controller,
+    { urls: { yelpURL: yelpURL, appURL: appURL }, getState: appStore.getState, dispatches: appDispatches }),
+    document.getElementById("loader"));
 })();
