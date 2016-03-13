@@ -131,7 +131,7 @@
         spot.image = spot.image ? spot.image : "https://s3-media4.fl.yelpcdn.com/bphoto/J0fwr9-7M_JKlMpTuIoZYw/ms.jpg";
         return(
           React.createElement(Spot, { key: index, name: spot.name, url: spot.url, image: spot.image, address: spot.address,
-            id: spot.id, reserve: self.props.reserve, tweet: self.props.tweet })
+            id: spot.id, users: spot.users, reserve: self.props.reserve, tweet: self.props.tweet })
         );
       });
 
@@ -148,6 +148,7 @@
       url: React.PropTypes.string,
       image: React.PropTypes.string,
       address: React.PropTypes.array,
+      users: React.PropTypes.number,
       reserve: React.PropTypes.func.isRequired,
       tweet: React.PropTypes.func.isRequired
     },
@@ -168,7 +169,7 @@
           React.createElement("input", { className: "tweet-btn", type:"button", value: "Tweet",
             onClick: this.props.tweet.bind(null, this.props.name) }),
           React.createElement("br", {}),
-          React.createElement("label", {}, "0 Going Tonight")
+          React.createElement("label", {}, this.props.users + " Going Tonight")
         )
       );
     }

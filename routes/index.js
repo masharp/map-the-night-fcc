@@ -25,27 +25,38 @@ router.get("/", function(request, response) {
 router.get("/api/location/:area", function(request, response) {
   var yelpObj = { term: "bar", location: request.params.area };
 
-  yelp.search(yelpObj).then(function(yelpData) {
-    var parsedData = yelpData.businesses.map(function(d) {
-      return {
-        id: d.id,
-        name: d.name,
-        url: d.url,
-        image: d.image_url,
-        address: d.location.display_address
-      };
+  db.returnReservations(request.params.area).then(function(userData) {
+    userData = userData.area;
+
+    yelp.search(yelpObj).then(function(yelpData) {
+      //parse location data into an object and then add user data
+      var parsedData = yelpData.businesses.map(function(d) {
+        var users = 0;
+        
+        if(userData) {
+          for(var i = 0; i < userData.reservations.length; i++) {
+            if(d.id === userData.reservations[i].location) {
+              users = userData.reservations[i].users;
+              break;
+            }
+          }
+        }
+
+        return {
+          id: d.id,
+          name: d.name,
+          url: d.url,
+          image: d.image_url,
+          address: d.location.display_address,
+          users: users
+        };
+      });
+      response.setHeader("Content-Type", "application/json");
+      response.json(parsedData);
+
+    }).catch(function(error) {
+      console.error("YELP SEARCH ERROR", error);
     });
-
-    /*
-    db.returnReservations().then(function(r) {
-      console.log(r);
-    }); */
-
-    response.setHeader("Content-Type", "application/json");
-    response.json(parsedData);
-
-  }).catch(function(error) {
-    console.error("YELP SEARCH ERROR", error);
   });
 });
 

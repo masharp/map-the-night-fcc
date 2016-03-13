@@ -12,7 +12,7 @@ const MongoClient = require("mongodb").MongoClient;
       reservations: [
         {
           location: ""
-          users: []
+          users: int
         }
       ]
     }
@@ -24,18 +24,21 @@ const MongoClient = require("mongodb").MongoClient;
       db.collection("reservations_by_area", (error, collection) => {
         if(error) return(error);
 
-        collection.find({ area_name: area }, function(error, item) {
+        collection.find({ "area.name": area }, function(error, item) {
           if(error) return(error);
 
           if(item.area_name !== area) {
             collection.save({
-              area_name: area,
-              reservations: [
-                {
-                  "location": location,
-                  "users": [user]
-                }
-              ]
+              area: {
+                createdAt: new Date(),
+                name: area,
+                reservations: [
+                  {
+                    "location": location,
+                    "users": 1
+                  }
+                ]
+              }
             }, function(error) {
               if(error) return error;
               db.close();
@@ -56,7 +59,7 @@ exports.returnReservations = function returnReservations(area) {
       db.collection("reservations_by_area", (error, collection) => {
         if(error) reject(error);
 
-        collection.findOne({ area_name: area }, (error, item) => {
+        collection.findOne({ "area.name": area.toLowerCase() }, (error, item) => {
           if(error) reject(error);
 
           db.close();
