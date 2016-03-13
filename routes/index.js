@@ -23,25 +23,23 @@ router.get("/", function(request, response) {
 
 //return yelp API data plus current user information
 router.get("/api/location/:area", function(request, response) {
-  var yelpObj = { term: "bar", location: request.params.area };
+  var areaInput = request.params.area;
+  var yelpObj = { term: "bar", location: areaInput };
 
-  db.returnReservations(request.params.area).then(function(userData) {
-    userData = userData.area;
-
+  db.returnReservations().then(function(userData) {
     yelp.search(yelpObj).then(function(yelpData) {
       //parse location data into an object and then add user data
       var parsedData = yelpData.businesses.map(function(d) {
         var users = 0;
-        
+
         if(userData) {
-          for(var i = 0; i < userData.reservations.length; i++) {
-            if(d.id === userData.reservations[i].location) {
-              users = userData.reservations[i].users;
+          for(var i = 0; i < userData.length; i++) {
+            if(d.id === userData[i].name) {
+              users = userData[i].users;
               break;
             }
           }
         }
-
         return {
           id: d.id,
           name: d.name,
@@ -57,13 +55,18 @@ router.get("/api/location/:area", function(request, response) {
     }).catch(function(error) {
       console.error("YELP SEARCH ERROR", error);
     });
+  }, function(error) {
+    console.error("MONGO USER FETCHING FAILED", error);
   });
 });
 
 //handle a new reservation
 router.post("/api/save", function(request, response) {
-  console.log(request.body);
-  //console.log(db.saveReservation(area, location, user));
+  var data = request.body;
+  db.saveReservation(data.location, function(result) {
+    if(result !== "Saved") { console.error("ERROR SAVING RESERVATION", result); }
+    response.end("Success");
+  });
 });
 
 module.exports = router;

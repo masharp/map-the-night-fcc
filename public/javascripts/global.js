@@ -6,51 +6,15 @@
   var Request = require("request");
 
   /* global script variables */
-  var appURL = "http://localhost:3000/api/location/";
-
-  /* Redux Reducer
-  var appReducer = function(state, action) {
-    if(state === undefined) state = {
-      locationData: {}
-    };
-
-    switch(action.type) {
-      case "NEW_LOCATION":
-        state.locationData = action.locationData;
-        return state;
-      default:
-        return state;
-    }
-    return state;
-  };
-
-  /* Redux Dispatchers
-  var appDispatches = {
-    newLocationData: function newLocationData(data) {
-      appStore.dispatch({ type: "NEW_LOCATIOn", locationData: data });
-    }
-  };
-
-  /* Redux Store
-  var appStore = Redux.createStore(appReducer);
-  */
+  var appURL = "http://localhost:3000/api/";
 
   /* React Components */
   var Controller = React.createClass({ displayName: "Controller",
     propTypes: {
       url: React.PropTypes.string.isRequired
-      //getState: React.PropTypes.func.isRequired,
-      //dispatches: React.PropTypes.object.isRequired
     },
     getInitialState: function getInitialState() {
       return { locationData: [] };
-    },
-    componentDidMount: function componentDidMount() {
-      /* var self = this;
-      appStore.subscribe(function() {
-        var newState = self.props.getState();
-        self.setState(newState);
-      }); */
     },
     submit: function submit() {
       var errorElement = document.getElementById("error-label");
@@ -62,26 +26,13 @@
         errorElement.classList.remove("hidden");
         errorElement.innerHTML = "Please enter a location! (City, ST)";
       } else {
-        //var searchVal = this.parseInputVal(inputVal);
-        //var localAPICall =  this.props.url + searchVal;
+        var localAPICall =  this.props.url + "location/" + inputVal;
 
-        Request(this.props.url + inputVal, function(error, localResponse) {
+        Request(localAPICall, function(error, httpResponse, body) {
           if(error) console.error("ERROR RETRIEVING LOCATION DATA");
 
-          self.setState({ locationData: JSON.parse(localResponse.body) });
+          self.setState({ locationData: JSON.parse(body) });
         });
-      }
-    },
-    parseInputVal: function parseInputVal(input) {
-      var t = input.split(" ");
-      if(t.length === 1) { return t[0]; }
-      else {
-        var temp = t[0];
-
-        for(var i = 1; i < t.length; i++) {
-          temp += "+" + t[i];
-        }
-        return temp;
       }
     },
     handleKeyDown: function handleKeyDown(e) {
@@ -92,14 +43,19 @@
         this.submit();
       }
     },
-    reserve: function reserve(location) {
-      console.log("Reserve clicked" + location);
+    reserve: function reserve(location, users) {
+      var localAPIURL = this.props.url + "save";
+      Request.post(localAPIURL, {form: { location: location }}, function(error, httpResponse, body) {
+        if(body === "Success") {
+          users++;
+          document.getElementById(location).innerHTML = users + " Going Tonight";
+        }
+      });
     },
     tweet: function tweet(location) {
       console.log("Tweet clicked" + location);
     },
     render: function render() {
-      console.log(this.state.locationData);
       return(
         React.createElement("div", { id: "main" },
           React.createElement("h1", { id: "main-title" }, "Map the Night"),
@@ -164,18 +120,16 @@
           React.createElement("span", {}, this.props.address[this.props.address.length - 1]),
           React.createElement("br", {}),
           React.createElement("input", { className: "reserve-btn", type:"button", value: "Check In",
-            onClick: this.props.reserve.bind(null, this.props.id) }),
+            onClick: this.props.reserve.bind(null, this.props.id, this.props.users) }),
           React.createElement("br", {}),
           React.createElement("input", { className: "tweet-btn", type:"button", value: "Tweet",
             onClick: this.props.tweet.bind(null, this.props.name) }),
           React.createElement("br", {}),
-          React.createElement("label", {}, this.props.users + " Going Tonight")
+          React.createElement("label", { id: this.props.id }, this.props.users + " Going Tonight")
         )
       );
     }
   });
 
-  ReactDOM.render(React.createElement(Controller,
-    { url: appURL } /* getState: appStore.getState, dispatches: appDispatches */),
-    document.getElementById("loader"));
+  ReactDOM.render(React.createElement(Controller, { url: appURL }), document.getElementById("loader"));
 })();

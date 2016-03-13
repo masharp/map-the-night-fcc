@@ -75,9 +75,9 @@ body, html {
       -moz-animation-fill-mode: forwards;
     	animation-fill-mode: forwards;
 
-      -webkit-animation-duration: 1.5s;
-      -moz-animation-duration: 1.5s;
-      animation-duration: 1.5s;
+      -webkit-animation-duration: 1s;
+      -moz-animation-duration: 1s;
+      animation-duration: 1s;
 
       &:hover {
         background-color: lighten($secondary-color, 15);

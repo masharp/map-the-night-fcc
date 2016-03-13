@@ -66,9 +66,9 @@ body, html {
       -webkit-animation-fill-mode: forwards;
       -moz-animation-fill-mode: forwards;
       animation-fill-mode: forwards;
-      -webkit-animation-duration: 1.5s;
-      -moz-animation-duration: 1.5s;
-      animation-duration: 1.5s; }
+      -webkit-animation-duration: 1s;
+      -moz-animation-duration: 1s;
+      animation-duration: 1s; }
       #main #locations .spot:hover {
         background-color: #39e16b; }
       #main #locations .spot h2 {
