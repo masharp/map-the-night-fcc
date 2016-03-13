@@ -53,7 +53,7 @@ exports.returnReservations = function returnReservations(area) {
     MongoClient.connect(MONGO_URL, (error, db) => {
       if(error) reject(error);
 
-      db.collection("rservations_by_area", (error, collection) => {
+      db.collection("reservations_by_area", (error, collection) => {
         if(error) reject(error);
 
         collection.findOne({ area_name: area }, (error, item) => {

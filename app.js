@@ -39,7 +39,6 @@
 
   /* HTTP page routing */
   app.use("/", index);
-  app.use("/api/reservations", index);
   app.use("/api/save", index);
   app.use("/api/location/:area", index);
 

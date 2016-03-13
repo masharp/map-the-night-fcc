@@ -43,7 +43,7 @@
       //dispatches: React.PropTypes.object.isRequired
     },
     getInitialState: function getInitialState() {
-      return { locationData: {} };
+      return { locationData: [] };
     },
     componentDidMount: function componentDidMount() {
       /* var self = this;
@@ -62,12 +62,13 @@
         errorElement.classList.remove("hidden");
         errorElement.innerHTML = "Please enter a location! (City, ST)";
       } else {
-        var searchVal = this.parseInputVal(inputVal);
-        var localAPICall =  this.props.url + searchVal;
+        //var searchVal = this.parseInputVal(inputVal);
+        //var localAPICall =  this.props.url + searchVal;
 
-        Request(localAPICall, function(error, localResponse) {
+        Request(this.props.url + inputVal, function(error, localResponse) {
           if(error) console.error("ERROR RETRIEVING LOCATION DATA");
-          self.setState({ locationData: localResponse });
+
+          self.setState({ locationData: JSON.parse(localResponse.body) });
         });
       }
     },
@@ -92,10 +93,10 @@
       }
     },
     reserve: function reserve(location) {
-
+      console.log("Reserve clicked" + location);
     },
     tweet: function tweet(location) {
-
+      console.log("Tweet clicked" + location);
     },
     render: function render() {
       console.log(this.state.locationData);
@@ -118,33 +119,54 @@
 
   var Locations = React.createClass({ displayName: "Locations",
     propTypes: {
-      locations: React.PropTypes.object.isRequired,
+      locations: React.PropTypes.array.isRequired,
       reserve: React.PropTypes.func.isRequired,
       tweet: React.PropTypes.func.isRequired
     },
     render: function render() {
+      /* create a React node for each bar */
+      var self = this;
+      var spotNodes = this.props.locations.map(function mapData(spot, index) {
+        //check if there is an image. if not - include a generic one from yelp
+        spot.image = spot.image ? spot.image : "https://s3-media4.fl.yelpcdn.com/bphoto/J0fwr9-7M_JKlMpTuIoZYw/ms.jpg";
+        return(
+          React.createElement(Spot, { key: index, name: spot.name, url: spot.url, image: spot.image, address: spot.address,
+            id: spot.id, reserve: self.props.reserve, tweet: self.props.tweet })
+        );
+      });
+
       return(
-        React.createElement("div", { id: "locations" })
+        React.createElement("div", { id: "locations" }, spotNodes)
       );
     }
   });
 
   var Spot = React.createClass({ displayName: "Spot",
     propTypes: {
-      spotInfo: React.PropTypes.object.isRequired
+      id: React.PropTypes.string,
+      name: React.PropTypes.string,
+      url: React.PropTypes.string,
+      image: React.PropTypes.string,
+      address: React.PropTypes.array,
+      reserve: React.PropTypes.func.isRequired,
+      tweet: React.PropTypes.func.isRequired
     },
     render: function render() {
       return(
         React.createElement("div", { className: "spot" },
-          React.createElement("a", { href: "http://esq.h-cdn.co/assets/cm/15/06/54d3cdbba4f40_-_esq-01-bar-lgn.jpg", target: "_blank" },
-            React.createElement("img", { src: "http://esq.h-cdn.co/assets/cm/15/06/54d3cdbba4f40_-_esq-01-bar-lgn.jpg" }),
-            React.createElement("h2", {}, "Johny's Pub")
+          React.createElement("a", { href: this.props.url, target: "_blank" },
+            React.createElement("img", { src: this.props.image }),
+            React.createElement("h2", {}, this.props.name)
           ),
-          React.createElement("span", {}, "2584 Mt. Gurgles Rd."),
+          React.createElement("span", {}, this.props.address[0]),
           React.createElement("br", {}),
-          React.createElement("span", {}, "Youngstown, GH"),
+          React.createElement("span", {}, this.props.address[this.props.address.length - 1]),
           React.createElement("br", {}),
-          React.createElement("input", { type:"button", value: "Check In" }),
+          React.createElement("input", { className: "reserve-btn", type:"button", value: "Check In",
+            onClick: this.props.reserve.bind(null, this.props.id) }),
+          React.createElement("br", {}),
+          React.createElement("input", { className: "tweet-btn", type:"button", value: "Tweet",
+            onClick: this.props.tweet.bind(null, this.props.name) }),
           React.createElement("br", {}),
           React.createElement("label", {}, "0 Going Tonight")
         )

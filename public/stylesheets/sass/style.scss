@@ -3,7 +3,7 @@ $secondary-color: #1BB248;
 $tertiary-color: gray;
 
 $font: "Montserrat", sans-serif;
-$title-font: "Pacifico", cursive;
+$title-font: "IM Fell Great Primer", serif;
 
 /* CSS Fade-In keyframes -  Reference: https://fabriceleven.com/ */
 @-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -62,7 +62,7 @@ body, html {
       display: inline-block;
       padding: .5em;
       margin: .05em;
-      width: 15em;
+      width: 20em;
       border: .1em solid white;
       opacity: 0;
 
@@ -87,23 +87,35 @@ body, html {
       }
       img {
         height: auto;
-        width: 60%;
+        width: 50%;
       }
-      input {
-        margin: .6em;
-        padding: .3em;
+      .reserve-btn, .tweet-btn {
+        width: 9em;
+        margin-top: .6em;
+        padding: .4em;
         border: none;
-        background-color: darken($secondary-color, 15);
         color: $primary-color;
+      }
+      .reserve-btn {
+        background-color: darken($secondary-color, 15);
 
         &:hover {
           background-color: darken($secondary-color, 5);
           cursor: pointer;
         }
       }
+      .tweet-btn {
+          margin-bottom: .6em;
+          background-color: #00aced;
+
+          &:hover {
+            background-color: lighten(#00aced, 10);
+            cursor: pointer;
+          }
+      }
       label {
         padding: .2em;
-        color: darken($secondary-color, 15);
+        color: $primary-color;
       }
     }
   }

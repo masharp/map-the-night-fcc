@@ -21,15 +21,31 @@ router.get("/", function(request, response) {
   response.render("home", { title: "Map the Night | Social Nightlife Tracker" });
 });
 
-//return yelp API data
+//return yelp API data plus current user information
 router.get("/api/location/:area", function(request, response) {
-  console.log(request.params.area);
-});
+  var yelpObj = { term: "bar", location: request.params.area };
 
-//return reservation JSON
-router.get("/api/reservations", function(request, response) {
-  db.returnReservations().then(function(r) {
-    console.log(r);
+  yelp.search(yelpObj).then(function(yelpData) {
+    var parsedData = yelpData.businesses.map(function(d) {
+      return {
+        id: d.id,
+        name: d.name,
+        url: d.url,
+        image: d.image_url,
+        address: d.location.display_address
+      };
+    });
+
+    /*
+    db.returnReservations().then(function(r) {
+      console.log(r);
+    }); */
+
+    response.setHeader("Content-Type", "application/json");
+    response.json(parsedData);
+
+  }).catch(function(error) {
+    console.error("YELP SEARCH ERROR", error);
   });
 });
 
