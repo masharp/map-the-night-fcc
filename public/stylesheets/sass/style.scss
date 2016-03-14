@@ -27,12 +27,14 @@ body, html {
   #main-title {
     font-size: 3em;
     font-family: $title-font;
+    margin-bottom: .2em;
   }
   #main-subtitle {
     font-size: 1.2em;
   }
   #area-input {
-    margin: .7em;
+    margin-bottom: 2em;
+    margin-top: 1em;
     padding: .5em;
     width: 25%;
     font-size: 1.2em;
@@ -43,6 +45,7 @@ body, html {
   }
   #area-btn {
     font-size: 1.3em;
+    margin-left: .5em;
     padding: .3em;
     border: none;
     background-color: darken($secondary-color, 15);
@@ -53,7 +56,10 @@ body, html {
       cursor: pointer;
     }
   }
-
+  #loader-label {
+    background-color: $secondary-color;
+    font-size: 1.8em;
+  }
   #locations {
       width: 100%;
       margin-top: .5em;
@@ -75,9 +81,9 @@ body, html {
       -moz-animation-fill-mode: forwards;
     	animation-fill-mode: forwards;
 
-      -webkit-animation-duration: 1s;
-      -moz-animation-duration: 1s;
-      animation-duration: 1s;
+      -webkit-animation-duration: 1.2s;
+      -moz-animation-duration: 1.2s;
+      animation-duration: 1.2 s;
 
       &:hover {
         background-color: lighten($secondary-color, 15);
@@ -120,9 +126,16 @@ body, html {
     }
   }
 }
+
+/* FOOTER */
 .footer {
-  margin-top: 2em;
+  margin-top: 6em;
   text-align: center;
+}
+
+#yelp-img {
+  height: auto;
+  width: 3.5em;
 }
 a {
   text-decoration: none;

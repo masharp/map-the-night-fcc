@@ -6,17 +6,8 @@ const MONGO_URL = process.env.MONGOLAB_URI;
 /* Configure MongoDB */
 const MongoClient = require("mongodb").MongoClient;
 
-/* creates a new collection by area, which includes an array of objects
-    area: {
-      name: "",
-      reservations: [
-        {
-          location: ""
-          users: int
-        }
-      ]
-    }
-*/
+/* mongo function that saves a document by location and reservation. adds a createdAt
+  parameter to track TTL by the server */
 exports.saveReservation = function saveReservation(location, callback) {
   MongoClient.connect(MONGO_URL, (error, db) => {
     if(error) callback(error);

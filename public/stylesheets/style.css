@@ -28,11 +28,13 @@ body, html {
     background-color: #1BB248; }
   #main #main-title {
     font-size: 3em;
-    font-family: "IM Fell Great Primer", serif; }
+    font-family: "IM Fell Great Primer", serif;
+    margin-bottom: .2em; }
   #main #main-subtitle {
     font-size: 1.2em; }
   #main #area-input {
-    margin: .7em;
+    margin-bottom: 2em;
+    margin-top: 1em;
     padding: .5em;
     width: 25%;
     font-size: 1.2em;
@@ -42,6 +44,7 @@ body, html {
     border-radius: none; }
   #main #area-btn {
     font-size: 1.3em;
+    margin-left: .5em;
     padding: .3em;
     border: none;
     background-color: #11702d;
@@ -49,6 +52,9 @@ body, html {
     #main #area-btn:hover {
       background-color: #189c3f;
       cursor: pointer; }
+  #main #loader-label {
+    background-color: #1BB248;
+    font-size: 1.8em; }
   #main #locations {
     width: 100%;
     margin-top: .5em; }
@@ -66,9 +72,9 @@ body, html {
       -webkit-animation-fill-mode: forwards;
       -moz-animation-fill-mode: forwards;
       animation-fill-mode: forwards;
-      -webkit-animation-duration: 1s;
-      -moz-animation-duration: 1s;
-      animation-duration: 1s; }
+      -webkit-animation-duration: 1.2s;
+      -moz-animation-duration: 1.2s;
+      animation-duration: 1.2 s; }
       #main #locations .spot:hover {
         background-color: #39e16b; }
       #main #locations .spot h2 {
@@ -97,9 +103,14 @@ body, html {
         padding: .2em;
         color: white; }
 
+/* FOOTER */
 .footer {
-  margin-top: 2em;
+  margin-top: 6em;
   text-align: center; }
+
+#yelp-img {
+  height: auto;
+  width: 3.5em; }
 
 a {
   text-decoration: none;

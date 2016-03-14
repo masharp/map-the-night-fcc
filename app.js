@@ -1,30 +1,32 @@
-/* TODO:
-    Testing:
-      - expect for asserts
-      - Jasmine
-    Isomporphic React:
-      - React in node
-      - Redux with React
-      - Redux devTools
-*/
 /*jshint esnext: true */
 
 (function() {
   "use strict";
 
   /* Module Dependencies */
-  var express = require("express");
-  var path = require("path");
-  var favicon = require("serve-favicon");
-  var logger = require("morgan");
-  var bodyParser = require("body-parser");
-  var compression = require("compression");
+  const express = require("express");
+  const path = require("path");
+  const favicon = require("serve-favicon");
+  const logger = require("morgan");
+  const bodyParser = require("body-parser");
+  const compression = require("compression");
+  const dotenv = require("dotenv").config();
+  const session = require("express-session");
 
   /* Route Controllers */
-  var index = require("./routes/index.js");
+  const index = require("./routes/index.js");
 
   /* Express Application */
   var app = express();
+
+  /* Express-Session session setup */
+  app.use(session({
+    name: "map-the-night0.0.1",
+    secret: "m-l-h-93",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: false, maxAge: 900000 }
+  }));
 
   /* View Engine setup */
   app.set("views", path.join(__dirname, "views"));

@@ -2,12 +2,12 @@
 "use strict";
 
 /* HTTP Routing */
-var express = require("express");
-var router = express.Router();
-var db = require("../db");
-var dotenv = require("dotenv").config();
-var app = require("../app");
-var Yelp = require("yelp");
+const express = require("express");
+const router = express.Router();
+const db = require("../db");
+const dotenv = require("dotenv").config();
+const app = require("../app");
+const Yelp = require("yelp");
 
 /* Setup Yelp Authentication */
 var yelp = new Yelp({
@@ -17,23 +17,26 @@ var yelp = new Yelp({
   token_secret: process.env.YELP_TOK_SECRET,
 });
 
+/* Home Page */
 router.get("/", function(request, response) {
   response.render("home", { title: "Map the Night | Social Nightlife Tracker" });
 });
 
 //return yelp API data plus current user information
 router.get("/api/location/:area", function(request, response) {
-  var areaInput = request.params.area;
-  var yelpObj = { term: "bar", location: areaInput };
+  let areaInput = request.params.area;
+  let yelpObj = { term: "bar", location: areaInput };
 
   db.returnReservations().then(function(userData) {
     yelp.search(yelpObj).then(function(yelpData) {
+      
       //parse location data into an object and then add user data
-      var parsedData = yelpData.businesses.map(function(d) {
-        var users = 0;
+      let parsedData = yelpData.businesses.map(function(d) {
+        let users = 0;
 
+        // adds the user information to the yelp data
         if(userData) {
-          for(var i = 0; i < userData.length; i++) {
+          for(let i = 0; i < userData.length; i++) {
             if(d.id === userData[i].name) {
               users = userData[i].users;
               break;
@@ -62,11 +65,12 @@ router.get("/api/location/:area", function(request, response) {
 
 //handle a new reservation
 router.post("/api/save", function(request, response) {
-  var data = request.body;
+  let data = request.body;
   db.saveReservation(data.location, function(result) {
     if(result !== "Saved") { console.error("ERROR SAVING RESERVATION", result); }
     response.end("Success");
   });
 });
+
 
 module.exports = router;

@@ -51704,6 +51704,9 @@ function Node (value, prev, next, list) {
 }
 
 },{}],298:[function(require,module,exports){
+/* Many thanks to James Barnett for the loading animation code, referenced from:
+    http://codepen.io/jamesbarnett/pen/DxLrw */
+
 (function() {
   /* define browserify modules to pack */
   var ReactDOM = require("react-dom");
@@ -51723,6 +51726,7 @@ function Node (value, prev, next, list) {
       return { locationData: [] };
     },
     submit: function submit() {
+      this.setLoader(); //display loader
       var errorElement = document.getElementById("error-label");
       var inputElement = document.getElementById("area-input");
       var inputVal = inputElement.value;
@@ -51737,9 +51741,22 @@ function Node (value, prev, next, list) {
         Request(localAPICall, function(error, httpResponse, body) {
           if(error) console.error("ERROR RETRIEVING LOCATION DATA");
 
+          document.getElementById("locations").classList.remove("hidden");
+          document.getElementById("loader-label").classList.add("hidden");
           self.setState({ locationData: JSON.parse(body) });
         });
       }
+    },
+    setLoader: function setLoader() {
+      var loaderElement = document.getElementById("loader-label");
+      loaderElement.classList.remove("hidden");
+      document.getElementById("locations").classList.add("hidden");
+
+      var i = 0;
+      var loader = setInterval(function() {
+        i = ++i % 4;
+        loaderElement.innerHTML = "Loading" + Array(i + 1).join(".");
+      }, 500);
     },
     handleKeyDown: function handleKeyDown(e) {
       var errorElement = document.getElementById("error-label");
@@ -51751,15 +51768,24 @@ function Node (value, prev, next, list) {
     },
     reserve: function reserve(location, users) {
       var localAPIURL = this.props.url + "save";
-      Request.post(localAPIURL, {form: { location: location }}, function(error, httpResponse, body) {
-        if(body === "Success") {
-          users++;
-          document.getElementById(location).innerHTML = users + " Going Tonight";
-        }
-      });
+
+      if(confirm("Are you sure you'll be stopping by?")) {
+        Request.post(localAPIURL, {form: { location: location }}, function(error, httpResponse, body) {
+          if(body === "Success") {
+            users++;
+            document.getElementById(location).innerHTML = users + " Going Tonight";
+          }
+        });
+      }
     },
-    tweet: function tweet(location) {
-      console.log("Tweet clicked" + location);
+    tweet: function tweet(location, address) {
+      address = address[1].split(",")[0];
+
+      var tweetText = "I'll be at " + location + " in " + address + " tonight!" +
+        " See you there?\nsent from http://www.map-the-night.herokuapp.com";
+      var tweetLink = "http://twitter.com/home?status=" + encodeURIComponent(tweetText);
+
+      window.open(tweetLink, "_blank");
     },
     render: function render() {
       return(
@@ -51773,6 +51799,7 @@ function Node (value, prev, next, list) {
             onKeyDown: this.handleKeyDown }),
           React.createElement("input", { id: "area-btn", type:"button", onClick: this.submit, value: "Find" }),
           React.createElement("br", {}),
+          React.createElement("label", { id: "loader-label", className: "hidden" }),
           React.createElement(Locations, { locations: this.state.locationData, reserve: this.reserve, tweet: this.tweet })
         )
       );
@@ -51825,11 +51852,11 @@ function Node (value, prev, next, list) {
           React.createElement("br", {}),
           React.createElement("span", {}, this.props.address[this.props.address.length - 1]),
           React.createElement("br", {}),
-          React.createElement("input", { className: "reserve-btn", type:"button", value: "Check In",
+          React.createElement("input", { className: "reserve-btn", type:"button", value: "Drop In",
             onClick: this.props.reserve.bind(null, this.props.id, this.props.users) }),
           React.createElement("br", {}),
           React.createElement("input", { className: "tweet-btn", type:"button", value: "Tweet",
-            onClick: this.props.tweet.bind(null, this.props.name) }),
+            onClick: this.props.tweet.bind(null, this.props.name, this.props.address) }),
           React.createElement("br", {}),
           React.createElement("label", { id: this.props.id }, this.props.users + " Going Tonight")
         )
