@@ -8,15 +8,9 @@
   var Redux = require("redux");
   var Request = require("request");
 
-  /* global script variables */
-  var appURL = "http://map-the-night.herokuapp.com/api/";
-
   /* ------------------------ React Components -------------------------- */
   /* central controller for the app - contains main UI and user input elements */
   var Controller = React.createClass({ displayName: "Controller",
-    propTypes: {
-      url: React.PropTypes.string.isRequired
-    },
     getInitialState: function getInitialState() {
       return { locationData: [] };
     },
@@ -33,10 +27,10 @@
         errorElement.classList.remove("hidden");
         errorElement.innerHTML = "Please enter a location! (City, ST)";
       } else {
-        var localAPICall =  this.props.url + "location/" + inputVal;
+        var localAPICall = "https://map-the-night.herokuapp.com/api/location/" + inputVal;
 
         Request(localAPICall, function(error, httpResponse, body) {
-          if(error) console.error("ERROR RETRIEVING LOCATION DATA");
+          if(error) console.error("ERROR RETRIEVING LOCATION DATA", error);
 
           /* remove loader and display result */
           document.getElementById("locations").classList.remove("hidden");
@@ -70,7 +64,7 @@
     /* component function that allows the user to indicate they will be at a location
         that evening. passed to each "spot" element as a prop */
     reserve: function reserve(location, users) {
-      var localAPIURL = this.props.url + "save";
+      var localAPIURL = "https://map-the-night.herokuapp.com/api/save";
 
       if(confirm("Are you sure you'll be stopping by?")) {
         Request.post(localAPIURL, {form: { location: location }}, function(error, httpResponse, body) {
@@ -172,5 +166,5 @@
     }
   });
 
-  ReactDOM.render(React.createElement(Controller, { url: appURL }), document.getElementById("loader"));
+  ReactDOM.render(React.createElement(Controller, { }), document.getElementById("loader"));
 })();

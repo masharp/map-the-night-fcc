@@ -14,7 +14,8 @@
   },
   "scripts": {
     "sass": "sass --watch ./public/stylesheets/sass/style.scss:./public/stylesheets/style.css",
-    "start": "browserify ./public/javascripts/global.js -o ./public/javascripts/bundle.js && node ./bin/www",
+    "bundle": "browserify ./public/javascripts/global.js -o ./public/javascripts/bundle.js",
+    "start": "node ./bin/www",
     "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
   },
   "engines": {
