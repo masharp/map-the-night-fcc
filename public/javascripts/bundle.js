@@ -51715,9 +51715,10 @@ function Node (value, prev, next, list) {
   var Request = require("request");
 
   /* global script variables */
-  var appURL = "http://localhost:3000/api/";
+  var appURL = "http://map-the-night.herokuapp.com/api/";
 
-  /* React Components */
+  /* ------------------------ React Components -------------------------- */
+  /* central controller for the app - contains main UI and user input elements */
   var Controller = React.createClass({ displayName: "Controller",
     propTypes: {
       url: React.PropTypes.string.isRequired
@@ -51725,6 +51726,7 @@ function Node (value, prev, next, list) {
     getInitialState: function getInitialState() {
       return { locationData: [] };
     },
+    /* submits query to the local api, which calls the yelp api based on search results */
     submit: function submit() {
       this.setLoader(); //display loader
       var errorElement = document.getElementById("error-label");
@@ -51732,6 +51734,7 @@ function Node (value, prev, next, list) {
       var inputVal = inputElement.value;
       var self = this;
 
+      /* display an error text if nothing was entered */
       if(!inputVal) {
         errorElement.classList.remove("hidden");
         errorElement.innerHTML = "Please enter a location! (City, ST)";
@@ -51741,12 +51744,15 @@ function Node (value, prev, next, list) {
         Request(localAPICall, function(error, httpResponse, body) {
           if(error) console.error("ERROR RETRIEVING LOCATION DATA");
 
+          /* remove loader and display result */
           document.getElementById("locations").classList.remove("hidden");
           document.getElementById("loader-label").classList.add("hidden");
+
           self.setState({ locationData: JSON.parse(body) });
         });
       }
     },
+    /* sets the loader by displaying it and then setting an interval for the animation */
     setLoader: function setLoader() {
       var loaderElement = document.getElementById("loader-label");
       loaderElement.classList.remove("hidden");
@@ -51758,6 +51764,7 @@ function Node (value, prev, next, list) {
         loaderElement.innerHTML = "Loading" + Array(i + 1).join(".");
       }, 500);
     },
+    /* allows the user to hit enter inside of the textbox */
     handleKeyDown: function handleKeyDown(e) {
       var errorElement = document.getElementById("error-label");
       if(!errorElement.classList.contains("hidden")) errorElement.classList.add("hidden");
@@ -51766,6 +51773,8 @@ function Node (value, prev, next, list) {
         this.submit();
       }
     },
+    /* component function that allows the user to indicate they will be at a location
+        that evening. passed to each "spot" element as a prop */
     reserve: function reserve(location, users) {
       var localAPIURL = this.props.url + "save";
 
@@ -51778,9 +51787,12 @@ function Node (value, prev, next, list) {
         });
       }
     },
+    /* allows the user to send a tweet to the Twitter URI that will then authenticate them
+      and permit a tweet. Passed to all "spot" elements as a prop */
     tweet: function tweet(location, address) {
       address = address[1].split(",")[0];
 
+      /* format and endcode tweet text via native encoding function */
       var tweetText = "I'll be at " + location + " in " + address + " tonight!" +
         " See you there?\nsent from http://www.map-the-night.herokuapp.com";
       var tweetLink = "http://twitter.com/home?status=" + encodeURIComponent(tweetText);
@@ -51806,6 +51818,7 @@ function Node (value, prev, next, list) {
     }
   });
 
+  /* Loction Component that parses the yelp data and creates individual "spot" elements */
   var Locations = React.createClass({ displayName: "Locations",
     propTypes: {
       locations: React.PropTypes.array.isRequired,
@@ -51830,6 +51843,7 @@ function Node (value, prev, next, list) {
     }
   });
 
+  /* an individual nightlife location */
   var Spot = React.createClass({ displayName: "Spot",
     propTypes: {
       id: React.PropTypes.string,

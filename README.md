@@ -15,5 +15,17 @@
     Michael Sharp 2016
 
 ## Change Log
+
 ### Mar. 9, 2016
   * Initial Commit
+
+### Mar. 10 - Mar. 11, 2016
+  * Added React Components
+  * Added Yelp API search functionality
+  * Added MongoDB "drop in" tracking functionality
+
+## Mar. 12 - Mar. 14, 2016
+  * Added tweeting capability
+  * Added loading animation
+  * Fixed styling
+  * Optimized for mobile
