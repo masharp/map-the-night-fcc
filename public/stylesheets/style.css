@@ -20,18 +20,22 @@ body, html {
   color: white;
   font-size: 15px; }
 
+#top {
+  width: 100%;
+  text-align: center; }
+  #top #main-title {
+    font-size: 3em;
+    font-family: "IM Fell Great Primer", serif;
+    margin-bottom: .2em; }
+  #top #main-subtitle {
+    font-size: 1.2em; }
+
 #main {
   width: 100%;
   text-align: center; }
   #main #error-label {
     color: red;
     background-color: #1BB248; }
-  #main #main-title {
-    font-size: 3em;
-    font-family: "IM Fell Great Primer", serif;
-    margin-bottom: .2em; }
-  #main #main-subtitle {
-    font-size: 1.2em; }
   #main #area-input {
     margin-bottom: 2em;
     margin-top: 1em;
@@ -78,6 +82,9 @@ body, html {
       -webkit-animation-duration: 1.2s;
       -moz-animation-duration: 1.2s;
       animation-duration: 1.2 s; }
+      @media (max-width: 650px) {
+        #main #locations .spot {
+          width: 18em; } }
       #main #locations .spot:hover {
         background-color: #39e16b; }
       #main #locations .spot h2 {

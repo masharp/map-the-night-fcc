@@ -51796,9 +51796,6 @@ function Node (value, prev, next, list) {
     render: function render() {
       return(
         React.createElement("div", { id: "main" },
-          React.createElement("h1", { id: "main-title" }, "Map the Night"),
-          React.createElement("span", { id: "main-subtitle" }, "See nightlife in your area and let your friends know where you'll be!"),
-          React.createElement("br", {}),
           React.createElement("label", { id: "error-label", className: "hidden" }),
           React.createElement("br", {}),
           React.createElement("input", { id: "area-input", type: "text", placeholder: "Your location...",

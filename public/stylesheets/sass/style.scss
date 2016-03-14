@@ -16,14 +16,11 @@ body, html {
   color: $primary-color;
   font-size: 15px;
 }
-#main {
+
+#top {
   width: 100%;
   text-align: center;
 
-  #error-label {
-    color: red;
-    background-color: $secondary-color;
-  }
   #main-title {
     font-size: 3em;
     font-family: $title-font;
@@ -31,6 +28,16 @@ body, html {
   }
   #main-subtitle {
     font-size: 1.2em;
+  }
+}
+
+#main {
+  width: 100%;
+  text-align: center;
+
+  #error-label {
+    color: red;
+    background-color: $secondary-color;
   }
   #area-input {
     margin-bottom: 2em;
@@ -75,6 +82,10 @@ body, html {
       width: 20em;
       border: .1em solid white;
       opacity: 0;
+
+      @media (max-width: 650px) {
+        width: 18em;
+      }
 
       /* CSS Fade-In Animation -  Reference: https://fabriceleven.com/ */
       -webkit-animation: fadeIn ease-in 1;
