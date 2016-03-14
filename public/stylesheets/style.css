@@ -42,6 +42,9 @@ body, html {
     appearance: none;
     box-shadow: none;
     border-radius: none; }
+    @media (max-width: 650px) {
+      #main #area-input {
+        width: 70%; } }
   #main #area-btn {
     font-size: 1.3em;
     margin-left: .5em;
