@@ -85,6 +85,8 @@ body, html {
 
       @media (max-width: 650px) {
         width: 18em;
+        padding: 1em;
+        margin: .1em;
       }
 
       /* CSS Fade-In Animation -  Reference: https://fabriceleven.com/ */
@@ -109,6 +111,10 @@ body, html {
       img {
         height: auto;
         width: 50%;
+
+        @media (max-width: 650px) {
+          width: 40%;
+        }
       }
       .reserve-btn, .tweet-btn {
         width: 9em;

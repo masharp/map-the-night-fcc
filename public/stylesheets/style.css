@@ -84,7 +84,9 @@ body, html {
       animation-duration: 1.2 s; }
       @media (max-width: 650px) {
         #main #locations .spot {
-          width: 18em; } }
+          width: 18em;
+          padding: 1em;
+          margin: .1em; } }
       #main #locations .spot:hover {
         background-color: #39e16b; }
       #main #locations .spot h2 {
@@ -92,6 +94,9 @@ body, html {
       #main #locations .spot img {
         height: auto;
         width: 50%; }
+        @media (max-width: 650px) {
+          #main #locations .spot img {
+            width: 40%; } }
       #main #locations .spot .reserve-btn, #main #locations .spot .tweet-btn {
         width: 9em;
         margin-top: .6em;

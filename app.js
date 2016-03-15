@@ -39,12 +39,13 @@
   app.use(express.static(path.join(__dirname, "public")));
   app.use(compression());
 
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  //CORS fix for a cross origin errr I was getting on mobile
+  app.use(function(request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-  
+
   /* HTTP page routing */
   app.use("/", index);
   app.use("/api/save", index);
