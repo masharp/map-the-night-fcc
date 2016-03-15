@@ -18,6 +18,7 @@
 
   /* Express Application */
   var app = express();
+  app.use(compression());
 
   /* Express-Session session setup */
   app.use(session({
@@ -37,7 +38,6 @@
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, "public")));
-  app.use(compression());
 
   //CORS fix for a cross origin errr I was getting on mobile
   app.use(function(request, response, next) {
