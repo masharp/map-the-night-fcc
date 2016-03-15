@@ -11,6 +11,7 @@ describe("HTTP Route GET Testing", function() {
     it("returns status code 200", function(done) {
       request.get(baseURL, function(error, response, body) {
         expect(response.statusCode).toBe(200);
+        console.log("[ROUTE STATUS] PASS");
         done();
       });
     });
@@ -18,6 +19,7 @@ describe("HTTP Route GET Testing", function() {
     it("returns proper view", function(done) {
       request.get(baseURL, function(error, response, body) {
         expect(body).toContain("<title>Map the Night | Social Nightlife Tracker</title>");
+        console.log("[ROUTE VIEW] PASS");
         done();
       });
     });

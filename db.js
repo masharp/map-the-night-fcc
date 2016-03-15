@@ -59,16 +59,3 @@ exports.returnReservations = function returnReservations() {
     });
   });
 };
-
-/* removes all tests created by Jasmine */
-exports.cleanTests = function() {
-  MongoClient.connect(MONGO_URL, (error, db) => {
-    if(error) return error;
-
-    db.collection("reservations_by_area", (error, collection) => {
-      if(error) return error;
-
-      db.close();
-    });
-  });
-};

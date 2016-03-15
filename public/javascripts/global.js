@@ -67,7 +67,7 @@
       var localAPIURL = "https://map-the-night.herokuapp.com/api/save";
 
       if(confirm("Are you sure you'll be stopping by?")) {
-        Request.post(localAPIURL, {form: { location: location }}, function(error, httpResponse, body) {
+        Request.post(localAPIURL, { form: { location: location }}, function(error, httpResponse, body) {
           if(body === "Success") {
             users++;
             document.getElementById(location).innerHTML = users + " Going Tonight";
