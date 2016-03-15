@@ -27,8 +27,7 @@
         errorElement.classList.remove("hidden");
         errorElement.innerHTML = "Please enter a location! (City, ST)";
       } else {
-
-        var localAPICall = "http://" + window.location.hostname + "/api/location/" + inputVal;
+        var localAPICall = "http://map-the-night.herokuapp.com/api/location/" + inputVal;
 
         Request(localAPICall, function(error, httpResponse, body) {
           if(error) console.error("ERROR RETRIEVING LOCATION DATA", error);
@@ -65,7 +64,7 @@
     /* component function that allows the user to indicate they will be at a location
         that evening. passed to each "spot" element as a prop */
     reserve: function reserve(location, users) {
-      var localAPIURL = "http://" + window.location.hostname + "/api/save";
+      var localAPIURL = "http://map-the-night.herokuapp.com/api/save";
 
       if(confirm("Are you sure you'll be stopping by?")) {
         Request.post(localAPIURL, {form: { location: location }}, function(error, httpResponse, body) {
