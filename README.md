@@ -4,7 +4,7 @@
     to their friends on Twitter.
 
     Powered by Node.js, React.js, and MongoDB. Part of the FreeCodeCamp curriculum.
-    A working prototype of this application can be found [here](map-the-night.herokuapp.com)
+    A working prototype of this application can be found [here](http://map-the-night.herokuapp.com)
 
     www.softwareontheshore.com
     Michael Sharp 2016
