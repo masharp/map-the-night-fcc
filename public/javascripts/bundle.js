@@ -51734,7 +51734,7 @@ function Node (value, prev, next, list) {
         errorElement.innerHTML = "Please enter a location! (City, ST)";
       } else {
 
-        var localAPICall = window.location.hostname + "/api/location/" + inputVal;
+        var localAPICall = "http://" + window.location.hostname + "/api/location/" + inputVal;
 
         Request(localAPICall, function(error, httpResponse, body) {
           if(error) console.error("ERROR RETRIEVING LOCATION DATA", error);
@@ -51771,7 +51771,7 @@ function Node (value, prev, next, list) {
     /* component function that allows the user to indicate they will be at a location
         that evening. passed to each "spot" element as a prop */
     reserve: function reserve(location, users) {
-      var localAPIURL = window.location.hostname + "/api/save";
+      var localAPIURL = "http://" + window.location.hostname + "/api/save";
 
       if(confirm("Are you sure you'll be stopping by?")) {
         Request.post(localAPIURL, {form: { location: location }}, function(error, httpResponse, body) {
