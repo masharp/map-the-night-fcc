@@ -2,12 +2,12 @@
   "name": "map-the-night",
   "version": "0.0.1",
   "private": true,
-  "homepage": "map-the-night.herokuapp.com",
+  "homepage": "http://map-the-night.herokuapp.com",
   "bugs": {
     "url": "https://github.com/masharp/map-the-night-fcc/issues"
   },
   "author": "Michael Sharp (http://softwareontheshore.com)",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/masharp/map-the-night-fcc"
