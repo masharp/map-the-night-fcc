@@ -26,5 +26,4 @@
   * Optimized for mobile
 
  ### Mar. 18 - Mar. 19, 2017
-  * Updated styling of result cards
-   
+  * Updated styling of result cards for uniformity
