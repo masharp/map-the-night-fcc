@@ -1,3 +1,9 @@
+/* declare system fonts */
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 300;
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma"); }
 /* CSS Fade-In keyframes -  Reference: https://fabriceleven.com/ */
 @-webkit-keyframes fadeIn {
   from {
@@ -15,7 +21,7 @@
   to {
     opacity: 1; } }
 body, html {
-  font-family: "Montserrat", sans-serif;
+  font-family: "system";
   background-color: #1BB248;
   color: white;
   font-size: 15px; }
@@ -25,7 +31,7 @@ body, html {
   text-align: center; }
   #top #main-title {
     font-size: 3em;
-    font-family: "IM Fell Great Primer", serif;
+    font-family: "system";
     margin-bottom: .2em; }
   #top #main-subtitle {
     font-size: 1.2em; }
@@ -40,7 +46,7 @@ body, html {
     margin-bottom: 2em;
     margin-top: 1em;
     padding: .5em;
-    width: 25%;
+    width: 30%;
     font-size: 1.2em;
     border: none;
     appearance: none;
@@ -61,15 +67,33 @@ body, html {
       cursor: pointer; }
   #main #loader-label {
     background-color: #1BB248;
-    font-size: 1.8em; }
+    font-size: 1.5em; }
   #main #locations {
     width: 100%;
-    margin-top: .5em; }
+    margin-top: .5em;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start; }
     #main #locations .spot {
-      display: inline-block;
-      padding: .5em;
-      margin: .05em;
-      width: 20em;
+      height: 380px;
+      padding: 0 0 .5em 0;
+      margin: .2em;
+      width: 15em;
       border: .1em solid white;
       opacity: 0;
       /* CSS Fade-In Animation -  Reference: https://fabriceleven.com/ */
@@ -84,19 +108,14 @@ body, html {
       animation-duration: 1.2 s; }
       @media (max-width: 650px) {
         #main #locations .spot {
-          width: 18em;
-          padding: 1em;
-          margin: .1em; } }
-      #main #locations .spot:hover {
-        background-color: #39e16b; }
+          width: 90%;
+          margin: 0 0 .2em 0; } }
       #main #locations .spot h2 {
-        font-family: "IM Fell Great Primer", serif; }
+        font-family: "system";
+        min-height: 55px; }
       #main #locations .spot img {
-        height: auto;
-        width: 50%; }
-        @media (max-width: 650px) {
-          #main #locations .spot img {
-            width: 40%; } }
+        height: 10em;
+        width: 100%; }
       #main #locations .spot .reserve-btn, #main #locations .spot .tweet-btn {
         width: 9em;
         margin-top: .6em;
@@ -125,7 +144,7 @@ body, html {
 
 #yelp-img {
   height: auto;
-  width: 3.5em; }
+  width: 2.5em; }
 
 a {
   text-decoration: none;

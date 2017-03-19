@@ -2,8 +2,24 @@ $primary-color: white;
 $secondary-color: #1BB248;
 $tertiary-color: gray;
 
-$font: "Montserrat", sans-serif;
-$title-font: "IM Fell Great Primer", serif;
+/* declare system fonts */
+@font-face {
+    font-family: system;
+    font-style: normal;
+    font-weight: 300;
+    src:
+        local(".SFNSText-Light"),
+        local(".HelveticaNeueDeskInterface-Light"),
+        local(".LucidaGrandeUI"),
+        local("Ubuntu Light"),
+        local("Segoe UI Light"),
+        local("Roboto-Light"),
+        local("DroidSans"),
+        local("Tahoma");
+}
+
+$font: 'system';
+$title-font: 'system';
 
 /* CSS Fade-In keyframes -  Reference: https://fabriceleven.com/ */
 @-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -43,7 +59,7 @@ body, html {
     margin-bottom: 2em;
     margin-top: 1em;
     padding: .5em;
-    width: 25%;
+    width: 30%;
     font-size: 1.2em;
     border: none;
     appearance: none;
@@ -69,24 +85,47 @@ body, html {
   }
   #loader-label {
     background-color: $secondary-color;
-    font-size: 1.8em;
+    font-size: 1.5em;
   }
   #locations {
       width: 100%;
       margin-top: .5em;
 
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+
+      -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+      align-content: center;
+
+      -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+      align-items: flex-start;
+
     .spot {
-      display: inline-block;
-      padding: .5em;
-      margin: .05em;
-      width: 20em;
+      height: 380px;
+      padding: 0 0 .5em 0;
+      margin: .2em;
+      width: 15em;
       border: .1em solid white;
       opacity: 0;
 
       @media (max-width: 650px) {
-        width: 18em;
-        padding: 1em;
-        margin: .1em;
+        width: 90%;
+        margin: 0 0 .2em 0;
       }
 
       /* CSS Fade-In Animation -  Reference: https://fabriceleven.com/ */
@@ -102,19 +141,13 @@ body, html {
       -moz-animation-duration: 1.2s;
       animation-duration: 1.2 s;
 
-      &:hover {
-        background-color: lighten($secondary-color, 15);
-      }
       h2 {
         font-family: $title-font;
+        min-height: 55px;
       }
       img {
-        height: auto;
-        width: 50%;
-
-        @media (max-width: 650px) {
-          width: 40%;
-        }
+        height: 10em;
+        width: 100%;
       }
       .reserve-btn, .tweet-btn {
         width: 9em;
@@ -156,7 +189,7 @@ body, html {
 
 #yelp-img {
   height: auto;
-  width: 3.5em;
+  width: 2.5em;
 }
 a {
   text-decoration: none;

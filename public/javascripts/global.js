@@ -2,6 +2,7 @@
     http://codepen.io/jamesbarnett/pen/DxLrw */
 
 (function() {
+
   /* define browserify modules to pack */
   var ReactDOM = require("react-dom");
   var React = require("react");
@@ -92,7 +93,7 @@
         React.createElement("div", { id: "main" },
           React.createElement("label", { id: "error-label", className: "hidden" }),
           React.createElement("br", {}),
-          React.createElement("input", { id: "area-input", type: "text", placeholder: "Your location...",
+          React.createElement("input", { id: "area-input", type: "text", placeholder: "Find your city...",
             onKeyDown: this.handleKeyDown }),
           React.createElement("input", { id: "area-btn", type:"button", onClick: this.submit, value: "Find" }),
           React.createElement("br", {}),

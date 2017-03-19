@@ -19,8 +19,12 @@
   * Added Yelp API search functionality
   * Added MongoDB "drop in" tracking functionality
 
-## Mar. 12 - Mar. 14, 2016
+### Mar. 12 - Mar. 14, 2016
   * Added tweeting capability
   * Added loading animation
   * Fixed styling
   * Optimized for mobile
+
+ ### Mar. 18 - Mar. 19, 2017
+  * Updated styling of result cards
+   
