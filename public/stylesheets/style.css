@@ -116,6 +116,11 @@ body, html {
       #main #locations .spot img {
         height: 10em;
         width: 100%; }
+        @media (max-width: 650px) {
+          #main #locations .spot img {
+            width: 90%;
+            height: 8em;
+            margin-top: 1em; } }
       #main #locations .spot .reserve-btn, #main #locations .spot .tweet-btn {
         width: 9em;
         margin-top: .6em;

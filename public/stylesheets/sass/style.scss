@@ -148,6 +148,12 @@ body, html {
       img {
         height: 10em;
         width: 100%;
+
+        @media (max-width: 650px) {
+          width: 90%;
+          height: 8em;
+          margin-top: 1em;
+        }
       }
       .reserve-btn, .tweet-btn {
         width: 9em;
