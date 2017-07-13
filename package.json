@@ -19,7 +19,7 @@
     "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
   },
   "engines": {
-    "node": "~5.0.0",
+    "node": "~8.1.4",
     "npm": "~3.5.3"
   },
   "dependencies": {
